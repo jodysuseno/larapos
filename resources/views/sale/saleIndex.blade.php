@@ -17,7 +17,7 @@
     <h1><i class="{{ $icon }}"></i> {{ $title }}</h1>
   </div>
 </div>
-<form action="{{ route('sale.store') }}" method="post" target="_blank">
+<form action="{{ route('sale.store') }}" method="post">
   @csrf
   <div class="row">
     <div class="col-md-6">

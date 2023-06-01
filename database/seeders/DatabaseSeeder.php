@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '08123234789',
             'address' => 'nongkojajar - Kab.Pasuruan',
         ]);
-        
+
         Customer::create([
             'name' => 'Radit',
             'gender' => 'male',
@@ -220,7 +220,7 @@ class DatabaseSeeder extends Seeder
             'item_id' => 9, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 10,
         ]);
         Stock::create([
-            'item_id' =>10, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 35,
+            'item_id' => 10, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 35,
         ]);
 
         Item::where('item_id', 1)->update(['stock' => 10]);
@@ -233,6 +233,5 @@ class DatabaseSeeder extends Seeder
         Item::where('item_id', 8)->update(['stock' => 25]);
         Item::where('item_id', 9)->update(['stock' => 10]);
         Item::where('item_id', 10)->update(['stock' => 35]);
-
     }
 }

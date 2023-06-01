@@ -46,7 +46,7 @@
       <td width="33%">
       </td>
       <td width="33%">
-        Date ....
+        Date {{ $date }}
         <br><br><br><br><br><br><hr>
       </td>
     </tr>

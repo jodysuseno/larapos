@@ -10,6 +10,7 @@
   <h3 align="center">Sale Report</h3>
   <h4 align="center">LaraPos</h4>
   <h5 align="center">Jl.Keabadain - No.1</h5>
+  <p align="right">Date : {{ $date }}</p>
   <hr>
   <table width='100%' style="border-collapse: collapse;" border="1">
     <thead>
@@ -30,10 +31,23 @@
         <td>{{ date_format(date_create($sale->date),"d/m/Y") }}</td>
         <td>{{ $sale->customer_name }}</td>
         <td>{{ $sale->cashier_name }}</td>
-        <td>{{ $sale->total_price }}</td>
+        <td align="right">{{ $sale->total_price }}</td>
       </tr>
       @endforeach
     </tbody>
+  </table>
+  <br><br>
+  <table width="100%">
+    <tr>
+      <td width="33%">
+      </td>
+      <td width="33%">
+      </td>
+      <td width="33%">
+        Date {{ $date }}
+        <br><br><br><br><br><br><hr>
+      </td>
+    </tr>
   </table>
 </body>
 </html>

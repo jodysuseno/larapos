@@ -39,5 +39,36 @@
       </div>
     </div>
   </div>
-</div>     
+</div>  
+<div class="row">
+  <div class="col-md-8">
+    <div class="tile">
+      <h3 class="tile-title">Grafik Transaksi masuk dan keluar Tahun ini</h3>
+      <div class="embed-responsive embed-responsive-16by9">
+        <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+      </div>
+    </div>
+  </div>
+</div>   
+<script type="text/javascript" src="{{ asset('valiadmin/js/plugins/chart.js')}}"></script>
+<script type="text/javascript">
+  var data = {
+    labels: ["January", "February", "March", "April", "May"],
+    datasets: [
+      {
+        label: "Stock Masuk",
+        fillColor: "orange",
+        data: [65, 59, 80, 81, 56]
+      },
+      {
+        label: "Stok Keluar",
+        fillColor: "blue",
+        data: [28, 48, 40, 19, 86]
+      }
+    ]
+  };
+  var ctxb = $("#barChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxb).Bar(data);
+
+</script>
 @endsection

@@ -55,7 +55,7 @@
                 <td>{{ $sale->cashier_name }}</td>
                 <td>{{ $sale->total_price }}</td>
                 <td align="center">
-                  <form class="d-inline" action="{{ route('sale.page-invoice', $sale->sale_id) }}" target="_blank"
+                  <form class="d-inline" action="{{ route('sale.page-invoice', $sale->sale_id) }}"
                     method="POST">
                     @method('get')
                     @csrf

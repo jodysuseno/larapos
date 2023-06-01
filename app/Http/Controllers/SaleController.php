@@ -9,7 +9,8 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Sale;
 use App\Models\Cart;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class SaleController extends Controller
 {
@@ -38,7 +39,7 @@ class SaleController extends Controller
             'icon' => 'fa fa-shopping-cart',
             'date_now' => date_format(date_create(date("Y-m-d")), "d/m/Y"),
             'customers' => Customer::all(),
-            'items' => Item::all(),
+            'items' => Item::orderByDesc('created_at')->get(),
             'invoice' => $this->autonumber()
         ]);
     }
@@ -183,7 +184,7 @@ class SaleController extends Controller
             ->select('sales.invoice', 'sales.date', 'customers.name as customer_name', 'users.name as cashier_name', 'sales.total_price')
             ->orderBy('sales.created_at', 'desc')->get();
 
-        $pdf = PDF::loadview('sale.sales_print', ['sales' => $sales])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('sale.sales_print', ['sales' => $sales,'date' => Carbon::now()->format('d F Y'),])->setPaper('A4','potrait');
         return $pdf->stream();
     }
 }

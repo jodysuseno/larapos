@@ -81,6 +81,7 @@
         <div class="row d-print-none mt-2">
           <div class="col-12 text-right">
             {{-- <button class="btn btn-primary" onclick="history.back()"><i class="fa fa-arrow-circle-o-left"></i> Back</button> --}}
+            <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
             <button class="btn btn-primary" onclick="print()"><i class="fa fa-file-text"></i> Print</button>
           </div>
         </div>

@@ -27,19 +27,19 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         User::create([
-            'email' => 'jodysuseno@gmail.com',
-            'username' => 'jodysuseno',
-            'password' => bcrypt('jody123'),
-            'name' => 'jody ririt krido suseno',
+            'email' => 'admin@gmail.com',
+            'username' => 'admin',
+            'password' => bcrypt('admin1234'),
+            'name' => 'Admin',
             'address' => 'Prigen - Kab.Pasuruan',
             'level' => 'admin',
         ]);
 
         User::create([
-            'email' => 'jafar@email.com',
-            'username' => 'jafar',
-            'password' => bcrypt('jafar123'),
-            'name' => 'jafar',
+            'email' => 'user@email.com',
+            'username' => 'user',
+            'password' => bcrypt('user1234'),
+            'name' => 'User',
             'address' => 'Kepanjen - Kab.Malang',
             'level' => 'cashier',
         ]);

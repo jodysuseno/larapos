@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Sale;
 use App\Models\Cart;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
@@ -128,60 +129,86 @@ class SaleController extends Controller
         ]);
     }
 
-    public function report()
+    public function report(Request $request)
     {
+        $get_month = $request->input('get_month', false);
+        $get_cshr = $request->input('get_cshr', false);
 
+        // dd([$get_month,$get_cshr]);
+        // $get_month = $request->month;
+        if (empty($get_month)) {
+            $get_month = Carbon::now()->month;
+        } else {
+            $get_month = Carbon::createFromFormat('Y-m', $get_month);
+        }
+
+        // $get_cshr = $request->user_id;
+        if (empty($get_cshr)) {
+            $user = array();
+            foreach (User::all() as $value) {
+                $user[] = $value->id;
+            }
+            $get_cshr = $user;
+        } else {
+            $user = array();
+            $user[] = $get_cshr;
+            $get_cshr = $user;
+        }
+        
         $sales = DB::table('sales')
             ->join('customers', 'customers.customer_id', '=', 'sales.customer_id')
             ->join('users', 'users.id', '=', 'sales.user_id')
             ->select('sales.*', 'customers.name as customer_name', 'users.name as cashier_name')
+            ->whereIn('user_id', $get_cshr)
+            ->whereMonth('date', $get_month)
             ->orderBy('sales.created_at', 'desc')->get();
+        
 
         return view('sale.saleReport', [
             'title' => 'Sales Report',
             'icon' => 'fa fa-file-text',
-            'sales' => $sales
+            'sales' => $sales,
+            'cashier' => User::orderByDesc('created_at')->get(),
         ]);
     }
 
     public function dateFilter(Request $request)
     {
-        $request->validate([
-            'first_date' => 'required',
-            'last_date' => 'required'
-        ]);
+        $get_month = $request->input('month', false);
+        $get_cshr = $request->input('user_id', false);
 
-        if ($request->first_date == null || $request->last_date == null) {
-            $sales = Sale::all()->orderBy('sales.created_at', 'desc')->get();
-        } else {
-            $sales = Sale::whereBetween('date', [
-                date_format(date_create($request->first_date), "Y-m-d"),
-                date_format(date_create($request->last_date), "Y-m-d")
-            ])->orderBy('sales.created_at', 'desc')->get();
-        }
-
-
-        // return view('sale.saleReport',[
-        //     'title' => 'Sales Report',
-        //     'icon' => 'fa fa-file-text',
-        //     'sales' => $sales
-        // ]);
-
-        // return redirect()->route('stock.report', );
-
-        return redirect()->route('sale.saleReport', [
-            'title' => 'Sales Report',
-            'icon' => 'fa fa-file-text',
-            'sales' => $sales
-        ]);
+        return redirect('/sale-report?get_month='.$get_month.'&get_cshr='.$get_cshr);
     }
 
-    public function salePdf()
+    public function salePdf(Request $request)
     {
+        $get_month = $request->input('get_month');
+        $get_cshr = $request->input('get_cshr');
+
+        if (empty($get_month)) {
+            $get_month = Carbon::now()->month;
+        } else {
+            $get_month = Carbon::createFromFormat('Y-m', $get_month);
+        }
+
+        if (empty($get_cshr)) {
+            $user = array();
+            foreach (User::all() as $value) {
+                $user[] = $value->id;
+            }
+            $get_cshr = $user;
+        } else {
+            $user = array();
+            $user[] = $get_cshr;
+            $get_cshr = $user;
+        }
+
         $sales = DB::table('sales')
             ->join('customers', 'customers.customer_id', '=', 'sales.customer_id')
             ->join('users', 'users.id', '=', 'sales.user_id')
             ->select('sales.invoice', 'sales.date', 'customers.name as customer_name', 'users.name as cashier_name', 'sales.total_price')
+            ->whereIn('user_id', $get_cshr)
+            ->whereMonth('date', $get_month)
             ->orderBy('sales.created_at', 'desc')->get();
 
         $pdf = PDF::loadview('sale.sales_print', ['sales' => $sales,'date' => Carbon::now()->format('d F Y'),])->setPaper('A4','potrait');

@@ -44,6 +44,12 @@
             <tr>
               <td colspan="4"><hr></td>
             </tr>
+            <tr>
+              <td>Product name</td>
+              <td align="right">Quantity</td>
+              <td align="right">Total Quantity</td>
+              <td align="right">Total</td>
+            </tr>
             @foreach ($carts as $cart)
               <tr>
                 <td>{{ $cart->product_name }}</td>

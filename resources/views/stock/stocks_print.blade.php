@@ -20,6 +20,7 @@
         <th>Date</th>
         {{ $title == 'Stock In' ? '<th>Supplier</th>' : '' }}
         <th>Product</th>
+        <th>Status</th>
         <th>Quantity</th>
         <th>Description</th>
       </tr>
@@ -32,6 +33,7 @@
           <td align="right">{{ date_format(date_create($sale->date),"d/m/Y") }}</td>
           {{ $title == 'Stock In' ? '<td align="left">'. $sale->supplier_name .'</td>' : '' }}
           <td align="left">{{ $sale->product_item }}</td>
+          <td align="left">Stock {{ $sale->type }}</td>
           <td align="right">{{ $sale->qty }}</td>
           <td align="left">{{ $sale->detail }}</td>
         </tr>

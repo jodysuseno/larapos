@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type', ['in', 'out']);
             $table->string('detail');
             $table->integer('qty');
-            $table->date('date');
+            $table->dateTime('date', $precision = 0);
             $table->timestamps();
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('supplier_id')->references('supplier_id')->on('suppliers')->onDelete('restrict')->onUpdate('restrict');

@@ -53,7 +53,7 @@ Route::group(['middleware' => ['level:admin,cashier', 'auth']], function () {
   Route::get('/stock-report', [StockController::class, 'report'])->name('stock.report');
   Route::post('/sale-filter', [SaleController::class, 'dateFilter'])->name('sale.filter');
   Route::post('/sale-pdf', [SaleController::class, 'salePdf'])->name('sale.pdf');
-  Route::get('/stock-in-pdf', [StockController::class, 'stockInPdf'])->name('stockin.pdf');
+  Route::post('/stock-pdf', [StockController::class, 'stockPdf'])->name('stock.pdf');
   Route::get('/stock-out-pdf', [StockController::class, 'stockOutPdf'])->name('stockout.pdf');
   Route::post('/filter-report', [StockController::class, 'filterReport'])->name('stock.filter');
 

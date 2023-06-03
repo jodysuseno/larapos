@@ -11,15 +11,36 @@
     <div class="tile">
       <div class="tile-body">
         <form method="POST" action="{{ route('stock.filter') }}">
-          @csrf
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Date</span>
+        @csrf
+          <div class="row justify-content-center align-items-center g-2">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label for="">Month</label>
+                <div class="input-group">
+                  <input type="month" id="month" aria-label="Select Month" name="month" value="{{ request()->get('get_month') }}" class="form-control">
+                </div>
+              </div>
             </div>
-            <input type="date" aria-label="First date" name="first_date" class="form-control" required>
-            <input type="date" aria-label="Last date" name="last_date" class="form-control" required>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Filter</button>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label for="user_id" class="form-label">Status</label>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" name="type_in" value="in" type="checkbox" @if (request()->get('get_type_in') == 'in' ) checked @endif >Stock In
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" name="type_out" value="out"  type="checkbox" @if (request()->get('get_type_out') == 'out' ) checked @endif >Stock Out
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label for="" class="form-label">Filter</label>
+                <button type="submit" class="btn btn-block btn-primary">Filter</button>
+              </div>
             </div>
           </div>
         </form>
@@ -29,76 +50,46 @@
   <div class="col-md-12">
     <div class="tile">
       <div class="tile-body">
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-link active" id="stock-in" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Stock In</a>
-            <a class="nav-link" id="stock-out" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Stock Out</a>
+        @if ($stock->count() > 0)
+        <div class="row text-right g-2">
+          <div class="col-12 mb-3">
+            <form action="{{ route('stock.pdf') }}" method="post" target="_blank">
+              @csrf
+              <input type="hidden" name="get_month" id="get_month" value="{{ request()->get('get_month') }}">
+              <input type="hidden" name="get_type_in" id="get_type_in" value="{{ request()->get('get_type_in') }}">
+              <input type="hidden" name="get_type_out" id="get_type_out" value="{{ request()->get('get_type_out') }}">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-file-text"></i> Print</button>
+            </form>
           </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <br>
-          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="stock-in">
-            <a href="{{ route('stockin.pdf') }}" target="_blank" class="btn btn-primary"><i class="fa fa-file-text"></i> Print</a>
-            <br>
-            <br>
-            <div class="table-responsive">
-              <table class="table table table-sm table-hover table-bordered" id="sampleTable">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Barcode</th>
-                    <th>Date</th>
-                    <th>Product Item</th>
-                    <th>Quantity</th>
-                    <th>Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($stockIns as $stockIn)
-                    <tr>
-                      <td>{{ $loop->iteration }}</td>
-                      <td>{{ $stockIn->item_barcode }}</td>
-                      <td>{{ date_format(date_create($stockIn->date),"d/m/Y") }}</td>
-                      <td>{{ $stockIn->product_item }}</td>
-                      <td>{{ $stockIn->qty }}</td>
-                      <td>{{ $stockIn->detail }}</td>
-                    </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="stock-out">
-            <a href="{{ route('stockout.pdf') }}" target="_blank" class="btn btn-primary"><i class="fa fa-file-text"></i> Print</a>
-            <br>
-            <br>
-            <div class="table-responsive">
-              <table class="table table table-sm table-hover table-bordered" id="sampleTable1">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Barcode</th>
-                    <th>Date</th>
-                    <th>Product Item</th>
-                    <th>Quantity</th>
-                    <th>Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($stockOuts as $stockOut)
-                    <tr>
-                      <td>{{ $loop->iteration }}</td>
-                      <td>{{ $stockOut->item_barcode }}</td>
-                      <td>{{ date_format(date_create($stockOut->date),"d/m/Y") }}</td>
-                      <td>{{ $stockOut->product_item }}</td>
-                      <td>{{ $stockOut->qty }}</td>
-                      <td>{{ $stockOut->detail }}</td>
-                    </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-          </div>
+        </div>
+        @endif
+        <div class="table-responsive">
+          <table class="table table table-sm table-hover table-bordered" id="sampleTable">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Barcode</th>
+                <th>Date</th>
+                <th>Product Item</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($stock as $item)
+                <tr>
+                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $item->item_barcode }}</td>
+                  <td>{{ date_format(date_create($item->date),"d/m/Y") }}</td>
+                  <td>{{ $item->product_item }}</td>
+                  <td>{{ $item->qty }}</td>
+                  <td>Stock {{ $item->type }}</td>
+                  <td>{{ $item->detail }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -69,6 +69,17 @@
             @enderror
           </div>
           <div class="form-group">
+            <label for="exampleSelect2">Supplier</label>
+            <select name="supplier_id" class="form-control selectpicker  @error('supplier_id') is-invalid @enderror" data-live-search="true">
+              @foreach ($suppliers as $supplier)
+              <option value="{{ $supplier->supplier_id }}">{{ $supplier->name }}</option>
+              @endforeach
+            </select>
+            @error('supplier_id')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="form-group">
             <label class="control-label">Quantity</label>
             <input class="form-control @error('qty') is-invalid @enderror" value="{{ old('qty') }}" name="qty" type="number">
             @error('qty')

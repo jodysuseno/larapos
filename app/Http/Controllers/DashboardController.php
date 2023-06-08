@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\Customer;
+use App\Models\Setting;
 use App\Models\User;
 
 class DashboardController extends Controller
@@ -58,5 +59,35 @@ class DashboardController extends Controller
         $user->save();
 
         return redirect()->route('profile')->with('status', 'Profile has been updated!');
+    }
+
+    public function configuration()
+    {
+        return view('configuration', [
+            'title' => 'Configure Setting',
+            'icon' => 'fa fa-gear',
+            'setting' => Setting::findOrFail(1)->first()
+        ]);
+    }
+
+    public function configuration_update(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'contact' => 'required',
+            'owner' => 'required',
+            'descrpition' => 'max:200',
+        ]);
+
+
+        Setting::where('id',1)->update([
+            'name' => $request->name,
+            'contact' => $request->contact,
+            'owner' => $request->owner,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('configuration')->with('status', 'Configuration has been changed!');
     }
 }

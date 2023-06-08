@@ -47,7 +47,7 @@
           class="treeview-indicator fa fa-angle-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item @if ($title == 'Users') active @endif" href="{{ route('user.index') }}"><i class="icon fa fa-circle-o"></i> Users</a></li>
-        <li><a class="treeview-item @if ($title == 'Settings') active @endif" href="/user"><i class="icon fa fa-circle-o"></i> Settings</a></li>
+        <li><a class="treeview-item @if ($title == 'Configuration') active @endif" href="{{ route('configuration') }}"><i class="icon fa fa-circle-o"></i> Configuration</a></li>
       </ul>
     </li>
     @endif

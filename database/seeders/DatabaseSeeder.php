@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Unit;
 use App\Models\Item;
 use App\Models\Sale;
+use App\Models\Setting;
 use App\Models\Stock;
 use Carbon\Carbon;
 
@@ -233,5 +234,12 @@ class DatabaseSeeder extends Seeder
         Item::where('item_id', 8)->update(['stock' => 25]);
         Item::where('item_id', 9)->update(['stock' => 10]);
         Item::where('item_id', 10)->update(['stock' => 35]);
+
+        Setting::create([
+            'name' => 'Lara POS',
+            'contact' => '085555888765',
+            'owner' => 'Mrs. Lara',
+            'description' => 'Chinese Shop like kelontong shop. Sell any stuff for anything',
+        ]);
     }
 }

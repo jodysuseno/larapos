@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             'password' => bcrypt('admin1234'),
             'name' => 'Admin',
+            'profile_picture' => 'default.png',
             'address' => 'Prigen - Kab.Pasuruan',
             'level' => 'admin',
         ]);
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'user',
             'password' => bcrypt('user1234'),
             'name' => 'User',
+            'profile_picture' => 'default.png',
             'address' => 'Kepanjen - Kab.Malang',
             'level' => 'cashier',
         ]);

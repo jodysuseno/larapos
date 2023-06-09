@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\Customer;
@@ -61,6 +62,26 @@ class DashboardController extends Controller
         return redirect()->route('profile')->with('status', 'Profile has been updated!');
     }
 
+    public function profileUpload(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $update_picture = User::findOrFail(auth()->user()->id)->first();
+
+        $imageName = $update_picture->name . '-' . time() . '.' . $request->profile_picture->extension();
+        $request->profile_picture->move(public_path('images'), $imageName);
+
+        $image = Image::make($request->profile_picture->getRealPath())->fit(500, 500);
+        $image->save(public_path('images'), $imageName);
+
+        $update_picture->profile_picture = $imageName;
+        $update_picture->save();
+
+        return redirect()->back()->with('success', 'Picture has been uploaded!.');
+    }
+
     public function configuration()
     {
         return view('configuration', [
@@ -81,7 +102,7 @@ class DashboardController extends Controller
         ]);
 
 
-        Setting::where('id',1)->update([
+        Setting::where('id', 1)->update([
             'name' => $request->name,
             'contact' => $request->contact,
             'owner' => $request->owner,

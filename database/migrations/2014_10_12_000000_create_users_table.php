@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('name');
+            $table->string('profile_picture');
             $table->text('address');
             $table->enum('level', ['admin', 'cashier']);
             $table->timestamps();

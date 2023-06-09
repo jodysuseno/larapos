@@ -1,13 +1,19 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
-  {{-- <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30px" height="30px"
-      src="{{ asset('valiadmin/images/jodykrido.jpg')}}" alt="User Image">
+  <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30px" height="30px"
+      src="
+      @if (auth()->user()->profile_picture == 'default.png')
+      {{ asset('images/default.png') }}
+      @else
+      {{ asset('images/'. auth()->user()->profile_picture) }}
+      @endif
+      " alt="User Image">
     <div>
       <p class="app-sidebar__user-name">@auth {{ Auth::user()->name }} @endauth </p>
       <p class="app-sidebar__user-designation">@auth {{ Auth::user()->level }} @endauth</p>
     </div>
-  </div> --}}
+  </div>
   <ul class="app-menu">
     <li><a class="app-menu__item @if ($title == 'Dashboard') active @endif" href="/"><i class="app-menu__icon fa fa-dashboard"></i><span
           class="app-menu__label">Dashboard</span></a></li>

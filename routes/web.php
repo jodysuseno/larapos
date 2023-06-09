@@ -57,6 +57,7 @@ Route::group(['middleware' => ['level:admin,cashier', 'auth']], function () {
   Route::post('/filter-report', [StockController::class, 'filterReport'])->name('stock.filter');
   Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
   Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
+  Route::post('/profile-upload', [DashboardController::class, 'profileUpload'])->name('profile.upload');
   Route::get('/configuration', [DashboardController::class, 'configuration'])->name('configuration');
   Route::post('/configuration_update', [DashboardController::class, 'configuration_update'])->name('configuration_update');
 

@@ -16,7 +16,7 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>laraPos</h1>
+        <h1>{{ DB::table('settings')->first()->name; }}</h1>
       </div>
       <div class="login-box">
         <form class="login-form" method="POST" action="/loginpost">

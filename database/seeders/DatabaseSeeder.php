@@ -26,45 +26,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         User::create([
             'email' => 'admin@gmail.com',
-            'username' => 'admin',
+            'username' => 'admincashier',
             'password' => bcrypt('admin1234'),
-            'name' => 'Admin',
+            'name' => 'Admin Cashier',
             'profile_picture' => 'default.png',
-            'address' => 'Prigen - Kab.Pasuruan',
+            'address' => 'Jakarta Indonesia',
             'level' => 'admin',
         ]);
 
         User::create([
             'email' => 'user@email.com',
-            'username' => 'user',
+            'username' => 'usercashier',
             'password' => bcrypt('user1234'),
-            'name' => 'User',
+            'name' => 'User Cashier',
             'profile_picture' => 'default.png',
-            'address' => 'Kepanjen - Kab.Malang',
+            'address' => 'Surabaya Indonesia',
             'level' => 'cashier',
         ]);
 
         Supplier::create([
             'name' => 'PT. Jaya Abadi',
             'phone' => '08123456789',
-            'address' => 'Str. bean farm',
+            'address' => 'Str. bean farm, Semarang. Indonesia',
             'desc' => 'Supplier Item for nature resources',
         ]);
 
         Supplier::create([
             'name' => 'PT. Progamer',
             'phone' => '08123456xxx',
-            'address' => 'Str. Ahmad Yani',
+            'address' => 'Str. Ahmad Yani, Bandung Indonesia',
             'desc' => 'supplier for game',
         ]);
 
         Supplier::create([
             'name' => 'PT. Super Technology',
             'phone' => '08123234xxx',
-            'address' => 'Str. sutomo',
+            'address' => 'Str. sutomo, Bali',
             'desc' => 'supplier for gadget',
         ]);
 
@@ -79,28 +78,28 @@ class DatabaseSeeder extends Seeder
             'name' => 'Jafar',
             'gender' => 'male',
             'phone' => '08123456789',
-            'address' => 'Kepanjen - Kab.Malang',
+            'address' => 'Malang Indonesia',
         ]);
 
         Customer::create([
             'name' => 'Aliyah',
             'gender' => 'female',
             'phone' => '08123234789',
-            'address' => 'nongkojajar - Kab.Pasuruan',
+            'address' => 'Yogyakarta Indonesia',
         ]);
 
         Customer::create([
             'name' => 'Radit',
             'gender' => 'male',
             'phone' => '08098234789',
-            'address' => 'Ambon',
+            'address' => 'Ambon Indonesia',
         ]);
 
         Customer::create([
             'name' => 'Ela',
             'gender' => 'female',
             'phone' => '08098230089',
-            'address' => 'nongkojajar - Kab.Pasuruan',
+            'address' => 'Pasuruan Indonesia',
         ]);
 
         Category::create(['name' => 'Food']);

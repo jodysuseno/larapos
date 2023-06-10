@@ -53,16 +53,27 @@
 <script type="text/javascript" src="{{ asset('valiadmin/js/plugins/chart.js')}}"></script>
 <script type="text/javascript">
   var data = {
-    labels: ["January", "February", "March", "April", "May"],
+    labels: [
+      "January", 
+      "February", 
+      "March", 
+      "April", 
+      "May"
+    ],
     datasets: [
       {
+        label: "Sale",
+        fillColor: "green",
+        data: [65, 59, 80, 81, 56]
+      },
+      {
         label: "Stock Masuk",
-        fillColor: "orange",
+        fillColor: "blue",
         data: [65, 59, 80, 81, 56]
       },
       {
         label: "Stok Keluar",
-        fillColor: "blue",
+        fillColor: "orange",
         data: [28, 48, 40, 19, 86]
       }
     ]

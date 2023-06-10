@@ -23,6 +23,7 @@
             <thead>
               <tr>
                 <th>No</th>
+                <th>Picture</th>
                 <th>Username</th>
                 <th>Name</th>
                 <th>Address</th>
@@ -33,19 +34,26 @@
             <tbody>
               @foreach ($users as $user)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $user->username }}</td>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->address }}</td>
-                  <td>{{ $user->level }}</td>
-                  <td>
-                    <a href="/user/{{ $user->id }}/edit" class="btn btn-info btn-xs"><i class="icon fa fa-edit"></i> Update</a>
-                    {{-- <a href="" class="btn btn-danger btn-xs"><i class="icon fa fa-trash"></i> Delete</a> --}}
+                  <td class="align-middle" align="center">{{ $loop->iteration }}</td>
+                  <td class="align-middle" align="center"><img src="
+                    @if ($user->profile_picture == 'default.png')
+                    {{ asset('images/default.png') }}
+                    @else
+                    {{ asset('images/'. $user->profile_picture) }}
+                    @endif
+                    " class="rounded" height="75px" alt="">
+                  </td>
+                  <td class="align-middle" align="center">{{ $user->username }}</td>
+                  <td class="align-middle" align="center">{{ $user->name }}</td>
+                  <td class="align-middle" align="center">{{ $user->address }}</td>
+                  <td class="align-middle" align="center">{{ $user->level }}</td>
+                  <td class="align-middle" align="center">
+                    <a href="/user/{{ $user->id }}/edit" class="btn btn-info"><i class="icon fa fa-edit"></i> Update</a>
                     <form class="d-inline" action="{{ route('user.destroy',$user->id) }}" 
                       method="POST" onsubmit="return confirm('Are you sure to delete the data?')">
                       @method('delete')
                       @csrf
-                      <button class="btn btn-danger btn-xs"><i class="icon fa fa-trash"></i> Delete</button>
+                      <button class="btn btn-danger"><i class="icon fa fa-trash"></i> Delete</button>
                     </form>
                   </td>
                 </tr>

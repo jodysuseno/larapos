@@ -2,18 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\Customer;
+use App\Models\Sale;
 use App\Models\Setting;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
+
+        $sales_data_graph = array();
+        for ($i = 1; $i <= 12; $i++) {
+            $sales_data_graph[] = intval(Sale::whereMonth('date', '=', Carbon::now()->month($i))->sum('total_price'));
+        }
+
+        $top_sale = Cart::where('item_id', 9)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->sum('qty');
+
+
+        $arr_top_sale = array();
+        foreach (Item::all() as $value) {
+            $arr_top_sale[] = [$value->name, intval(Cart::where('item_id', $value->item_id)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->sum('qty'))];
+        }
+
+        // Mengurutkan array berdasarkan nilai kedua secara descending
+        usort($arr_top_sale, function ($a, $b) {
+            return $b[1] - $a[1];
+        });
+
+        // Mengambil hanya 5 nilai terbesar
+        $data_top_sale = array_slice($arr_top_sale, 0, 5);
+
+        // dd($data_top_sale);
+
+        // rsort($arr_top_sale_qty);
+        // $data_top_sale = array_slice($arr_top_sale_qty, 0, 5);
+        // dd($data_top_sale);
+
+
+
+
         return view(
             'dashboard',
             [
@@ -23,6 +58,10 @@ class DashboardController extends Controller
                 'count_supplier' => Supplier::all()->count(),
                 'count_customer' => Customer::all()->count(),
                 'count_user' => User::all()->count(),
+                'year_now' => Carbon::now()->year,
+                'sale_data_graph' => $sales_data_graph,
+                'data_top_sale' => $data_top_sale,
+
             ]
         );
     }

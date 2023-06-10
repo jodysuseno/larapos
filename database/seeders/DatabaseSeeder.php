@@ -194,36 +194,16 @@ class DatabaseSeeder extends Seeder
             'stock' => 0,
         ]);
 
-        Stock::create([
-            'item_id' => 1, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 10,
-        ]);
-        Stock::create([
-            'item_id' => 2, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 30,
-        ]);
-        Stock::create([
-            'item_id' => 3, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 40,
-        ]);
-        Stock::create([
-            'item_id' => 4, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 50,
-        ]);
-        Stock::create([
-            'item_id' => 5, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 100,
-        ]);
-        Stock::create([
-            'item_id' => 6, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 48,
-        ]);
-        Stock::create([
-            'item_id' => 7, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 24,
-        ]);
-        Stock::create([
-            'item_id' => 8, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 25,
-        ]);
-        Stock::create([
-            'item_id' => 9, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 10,
-        ]);
-        Stock::create([
-            'item_id' => 10, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 35,
-        ]);
+        Stock::create(['item_id' => 1, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 10,]);
+        Stock::create(['item_id' => 2, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 30,]);
+        Stock::create(['item_id' => 3, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 40,]);
+        Stock::create(['item_id' => 4, 'supplier_id' => 1, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 50,]);
+        Stock::create(['item_id' => 5, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 100,]);
+        Stock::create(['item_id' => 6, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 48,]);
+        Stock::create(['item_id' => 7, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 24,]);
+        Stock::create(['item_id' => 8, 'supplier_id' => 2, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 25,]);
+        Stock::create(['item_id' => 9, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 10,]);
+        Stock::create(['item_id' => 10, 'supplier_id' => 3, 'user_id' => 1, 'type' => 'in', 'date' => Carbon::parse(date('Y-m-d')), 'detail' => 'Restock item', 'qty' => 35,]);
 
         Item::where('item_id', 1)->update(['stock' => 10]);
         Item::where('item_id', 2)->update(['stock' => 30]);

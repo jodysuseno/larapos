@@ -123,7 +123,15 @@ class ItemController extends Controller
 
     public function destroy($id)
     {
-        Item::where('item_id', $id)->delete();
+        // Hapus items yang berhubungan dengan categories
+        DB::table('stocks')
+            ->where('item_id', $id)
+            ->delete();
+
+        // Hapus categories
+        DB::table('items')
+            ->where('item_id', $id)
+            ->delete();
 
         return redirect()->route('item.index')->with('status', 'Item has been deleted!');
     }

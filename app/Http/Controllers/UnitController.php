@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Unit;
+use Illuminate\Support\Facades\DB;
 
 class UnitController extends Controller
 {
@@ -30,17 +31,17 @@ class UnitController extends Controller
         $request->validate([
             'name' => 'required|max:255|unique:units'
         ]);
-        
+
         Unit::create([
             'name' => $request->name,
         ]);
 
-        return redirect()->route('unit.index')->with('status','Unit has been created!.');
+        return redirect()->route('unit.index')->with('status', 'Unit has been created!.');
     }
 
     public function edit($id)
     {
-        $unit = Unit::where('unit_id',$id)->first();
+        $unit = Unit::where('unit_id', $id)->first();
         return view('unit.unitEdit', [
             'title' => 'Edit unit',
             'icon' => 'fa fa-edit',
@@ -50,7 +51,7 @@ class UnitController extends Controller
 
     public function update(Request $request, $id)
     {
-        $unit = Unit::where('unit_id',$id)->first();
+        $unit = Unit::where('unit_id', $id)->first();
 
         if ($unit->name != $request->name) {
             $request->validate([
@@ -66,13 +67,39 @@ class UnitController extends Controller
             ->update([
                 'name' => $request->name
             ]);
-            
-        return redirect()->route('unit.index')->with('status','Unit has been Edited!.');
+
+        return redirect()->route('unit.index')->with('status', 'Unit has been Edited!.');
     }
 
     public function destroy($id)
     {
-        Unit::where('unit_id', $id)->delete();
-        return redirect()->route('unit.index')->with('status','Unit has been Deleted!.');
+        // Hapus data carts terkait
+        DB::table('carts')
+            ->whereIn('item_id', function ($query) use ($id) {
+                $query->select('item_id')
+                    ->from('items')
+                    ->where('unit_id', $id);
+            })
+            ->delete();
+
+        // Hapus stocks yang berhubungan dengan items yang berhubungan dengan categories
+        DB::table('stocks')
+            ->whereIn('item_id', function ($query) use ($id) {
+                $query->select('item_id')
+                    ->from('items')
+                    ->where('unit_id', $id);
+            })
+            ->delete();
+
+        // Hapus items yang berhubungan dengan categories
+        DB::table('items')
+            ->where('unit_id', $id)
+            ->delete();
+
+        // Hapus categories
+        DB::table('units')
+            ->where('unit_id', $id)
+            ->delete();
+        return redirect()->route('unit.index')->with('status', 'Unit has been Deleted!.');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -132,7 +133,24 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::where('customer_id',$id)->delete();
+        // Hapus data keranjang terlebih dahulu
+        DB::table('carts')
+            ->whereIn('sale_id', function ($query) use ($id) {
+                $query->select('sale_id')
+                    ->from('sales')
+                    ->where('customer_id', $id);
+            })
+            ->delete();
+
+        // Hapus data penjualan
+        DB::table('sales')
+            ->where('customer_id', $id)
+            ->delete();
+
+        // Hapus data pelanggan
+        DB::table('customers')
+            ->where('customer_id', $id)
+            ->delete();
         
         return redirect()->route('customer.index')->with('status','Customer has been deleted!');
     }

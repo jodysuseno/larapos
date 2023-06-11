@@ -88,7 +88,6 @@ class StockController extends Controller
         return redirect()->route('stock-in')->with('status', 'Stock In has been deleted!.');
     }
 
-
     public function stockOut()
     {
         $stock = DB::table('stocks')

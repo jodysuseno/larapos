@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Item;
+use App\Models\Stock;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -72,7 +75,32 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        Category::where('category_id', $id)->delete();
+        // Hapus data carts terkait
+        DB::table('carts')
+            ->whereIn('item_id', function ($query) use ($id) {
+                $query->select('item_id')
+                    ->from('items')
+                    ->where('category_id', $id);
+            })
+            ->delete();
+        // Hapus stocks yang berhubungan dengan items yang berhubungan dengan categories
+        DB::table('stocks')
+            ->whereIn('item_id', function ($query) use ($id) {
+                $query->select('item_id')
+                    ->from('items')
+                    ->where('category_id', $id);
+            })
+            ->delete();
+
+        // Hapus items yang berhubungan dengan categories
+        DB::table('items')
+            ->where('category_id', $id)
+            ->delete();
+
+        // Hapus categories
+        DB::table('categories')
+            ->where('category_id', $id)
+            ->delete();
         return redirect()->route('category.index')->with('status','Category has been Deleted!.');
     }
 }

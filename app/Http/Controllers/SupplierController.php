@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
-
+use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -133,7 +133,15 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        Supplier::where('supplier_id',$id)->delete();
+        // Hapus items yang berhubungan dengan categories
+        DB::table('stocks')
+            ->where('supplier_id', $id)
+            ->delete();
+
+        // Hapus categories
+        DB::table('suppliers')
+            ->where('supplier_id', $id)
+            ->delete();
         
         return redirect()->route('supplier.index')->with('status','Supplier has been deleted!');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -16,11 +17,12 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('user.userIndex',
+        return view(
+            'user.userIndex',
             [
                 'title' => 'User',
                 'icon' => 'fa fa-user',
-                'users' => $users                
+                'users' => $users
             ]
         );
     }
@@ -32,10 +34,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.userCreate',
+        return view(
+            'user.userCreate',
             [
                 'title' => 'Create User',
-                'icon' => 'fa fa-user'              
+                'icon' => 'fa fa-user'
             ]
         );
     }
@@ -48,7 +51,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'email' => 'required|email|max:255|unique:users',
             'username' => 'required|max:255|unique:users',
@@ -58,7 +61,7 @@ class UserController extends Controller
             'address' => 'max:200',
             'level' => 'required',
         ]);
-        
+
         User::create([
             'email' => $request->email,
             'username' => $request->username,
@@ -68,7 +71,7 @@ class UserController extends Controller
             'level' => $request->level,
         ]);
 
-        return redirect()->route('user.index')->with('status','User has been created!.');
+        return redirect()->route('user.index')->with('status', 'User has been created!.');
     }
 
     /**
@@ -91,12 +94,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::where('id',$id)->first();
-        return view('user.userEdit',
+        $user = User::where('id', $id)->first();
+        return view(
+            'user.userEdit',
             [
                 'title' => 'Update User',
                 'icon' => 'fa fa-user',
-                'user' => $user             
+                'user' => $user
             ]
         );
     }
@@ -110,7 +114,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
 
         if ($user->email != $request->email) {
             $request->validate([
@@ -138,8 +142,8 @@ class UserController extends Controller
             'address' => 'max:200',
             'level' => 'required',
         ]);
-        
-        if(empty($request->password)){
+
+        if (empty($request->password)) {
             User::where('id', $id)
                 ->update([
                     'email' => $request->email,
@@ -160,8 +164,7 @@ class UserController extends Controller
                 ]);
         }
 
-        return redirect()->route('user.index')->with('status','User has been updated!.');
-
+        return redirect()->route('user.index')->with('status', 'User has been updated!.');
     }
 
     /**
@@ -172,8 +175,29 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::where('id',$id)->delete();
-        
-        return redirect()->route('user.index')->with('status','User has been deleted!');
+        // Menghapus penjualan yang terkait
+        DB::table('sales')
+            ->whereIn('cart_id', function ($query) use ($id) {
+                $query->select('cart_id')
+                    ->from('carts')
+                    ->where('user_id', $id);
+            })->delete();
+
+        // Menghapus keranjang belanja yang terkait
+        DB::table('carts')
+            ->where('user_id', $id)
+            ->delete();
+
+        // Hapus pemasok yang terkait dengan pengguna
+        DB::table('suppliers')
+            ->where('user_id', $id)
+            ->delete();
+
+        // Hapus pengguna
+        DB::table('users')
+            ->where('user_id', $id)
+            ->delete();
+
+        return redirect()->route('user.index')->with('status', 'User has been deleted!');
     }
 }

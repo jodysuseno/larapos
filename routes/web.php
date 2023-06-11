@@ -29,6 +29,11 @@ Route::middleware(['guest'])->group(function () {
   Route::get('/login', [LoginController::class, 'login'])->name('login');
   Route::post('/loginpost', [LoginController::class, 'loginPost']);
 });
+Route::group(['middleware' => ['level:admin', 'auth']], function () {
+  Route::resource('/user', UserController::class);
+  Route::get('/configuration', [DashboardController::class, 'configuration'])->name('configuration');
+  Route::post('/configuration_update', [DashboardController::class, 'configuration_update'])->name('configuration_update');
+});
 
 Route::group(['middleware' => ['level:admin,cashier', 'auth']], function () {
   Route::get('/', [DashboardController::class, 'dashboard']);
@@ -37,7 +42,6 @@ Route::group(['middleware' => ['level:admin,cashier', 'auth']], function () {
   Route::resource('/category', CategoryController::class);
   Route::resource('/unit', UnitController::class);
   Route::resource('/item', ItemController::class);
-  Route::resource('/user', UserController::class);
   Route::get('/stock-in', [StockController::class, 'stockIn'])->name('stock-in');
   Route::get('/stock-out', [StockController::class, 'stockOut'])->name('stock-out');
   Route::get('/stock-in/add', [StockController::class, 'stockInAdd'])->name('stock-in.add');
@@ -58,9 +62,6 @@ Route::group(['middleware' => ['level:admin,cashier', 'auth']], function () {
   Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
   Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
   Route::post('/profile-upload', [DashboardController::class, 'profileUpload'])->name('profile.upload');
-  Route::get('/configuration', [DashboardController::class, 'configuration'])->name('configuration');
-  Route::post('/configuration_update', [DashboardController::class, 'configuration_update'])->name('configuration_update');
-
 });
 
 Route::get('/logout', [LoginController::class, 'logout']);

@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $arr_top_sale = array();
         foreach (Item::all() as $value) {
-            $arr_top_sale[] = [$value->name, intval(Cart::where('item_id', $value->item_id)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->sum('qty'))];
+            $arr_top_sale[] = [$value->name, intval(Cart::where('item_id', $value->item_id)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->count())];
         }
 
         usort($arr_top_sale, function ($a, $b) {
@@ -34,6 +34,15 @@ class DashboardController extends Controller
         });
 
         $data_top_sale = array_slice($arr_top_sale, 0, 5);
+
+        // Menghitung total jumlah
+        $total = array_reduce($data_top_sale, function ($carry, $item) {
+            return $carry + $item[1];
+        }, 0);
+        // Mengubah setiap nilai menjadi persentase
+        foreach ($data_top_sale as &$item) {
+            $item[1] = round(($item[1] / $total) * 100, 2);
+        }
 
         return view(
             'dashboard',

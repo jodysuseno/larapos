@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Item;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -262,32 +263,10 @@ class StockController extends Controller
             ->get();
 
         $pdf = PDF::loadview('stock.stocks_print', [
-            'title' => 'Stock In',
-            'date' => Carbon::now()->format('d F Y'),
-            'sales' => $stock
-        ])->setPaper('A4', 'potrait');
-        return $pdf->stream();
-    }
-
-    public function stockOutPdf()
-    {
-        $sales = DB::table('stocks')
-            ->join('items', 'stocks.item_id', '=', 'items.item_id')
-            ->join('users', 'stocks.user_id', '=', 'users.id')
-            ->where('stocks.type', '=', 'out')
-            ->select(
-                'stocks.*',
-                'items.barcode as item_barcode',
-                'items.name as product_item'
-            )
-            ->orderByRaw('date DESC')
-            ->get();
-
-
-        $pdf = PDF::loadview('stock.stocks_print', [
-            'title' => 'Stock Out',
-            'date' => Carbon::now()->format('d F Y'),
-            'sales' => $sales
+            'sales' => $stock,
+            'date' => Carbon::now(),
+            'name_shop' => Setting::first()->name,
+            'phone' => Setting::first()->contact,
         ])->setPaper('A4', 'potrait');
         return $pdf->stream();
     }

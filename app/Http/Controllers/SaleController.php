@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Sale;
 use App\Models\Cart;
+use App\Models\Setting;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -154,7 +155,7 @@ class SaleController extends Controller
             $user[] = $get_cshr;
             $get_cshr = $user;
         }
-        
+
         $sales = DB::table('sales')
             ->join('customers', 'customers.customer_id', '=', 'sales.customer_id')
             ->join('users', 'users.id', '=', 'sales.user_id')
@@ -162,7 +163,7 @@ class SaleController extends Controller
             ->whereIn('user_id', $get_cshr)
             ->whereMonth('date', $get_month)
             ->orderBy('sales.created_at', 'desc')->get();
-        
+
 
         return view('sale.saleReport', [
             'title' => 'Sales Report',
@@ -177,7 +178,7 @@ class SaleController extends Controller
         $get_month = $request->input('month', false);
         $get_cshr = $request->input('user_id', false);
 
-        return redirect('/sale-report?get_month='.$get_month.'&get_cshr='.$get_cshr);
+        return redirect('/sale-report?get_month=' . $get_month . '&get_cshr=' . $get_cshr);
     }
 
     public function salePdf(Request $request)
@@ -211,7 +212,12 @@ class SaleController extends Controller
             ->whereMonth('date', $get_month)
             ->orderBy('sales.created_at', 'desc')->get();
 
-        $pdf = PDF::loadview('sale.sales_print', ['sales' => $sales,'date' => Carbon::now()->format('d F Y'),])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('sale.sales_print', [
+            'sales' => $sales,
+            'date' => Carbon::now(),
+            'name_shop' => Setting::first()->name,
+            'phone' => Setting::first()->contact,
+        ])->setPaper('A4', 'potrait');
         return $pdf->stream();
     }
 }

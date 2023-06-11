@@ -8,9 +8,9 @@
 </div>
 <div class="row">
   <div class="col-md-6 col-lg-3">
-    <div class="widget-small info coloured-icon"><i class="icon fa fa-th fa-3x"></i>
+    <div class="widget-small info coloured-icon"><i class="icon fa fa-archive fa-3x"></i>
       <div class="info">
-        <h4>Item</h4>
+        <h4>Item Product</h4>
         <p><b>{{ $count_item }}</b></p>
       </div>
     </div>
@@ -43,7 +43,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="tile">
-      <h3 class="tile-title">Graph for Sales in {{ $year_now }}</h3>
+      <h3 class="tile-title">Monthly sales revenue in {{ $year_now }}</h3>
       <div class="embed-responsive embed-responsive-16by9">
         <canvas class="embed-responsive-item" id="LineChartDemo"></canvas>
       </div>
@@ -55,11 +55,11 @@
       <div class="embed-responsive embed-responsive-16by9 mb-3">
         <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
       </div>
-      <span><i class="fa fa-square" style="color:#2A6041"></i> {{ $data_top_sale[0][0] }} : {{ $data_top_sale[0][1] }}</span>&nbsp;&nbsp;&nbsp;
-      <span><i class="fa fa-square" style="color:#28965A"></i> {{ $data_top_sale[1][0] }} : {{ $data_top_sale[1][1] }}</span>&nbsp;&nbsp;&nbsp;
-      <span><i class="fa fa-square" style="color:#2CEAA3"></i> {{ $data_top_sale[2][0] }} : {{ $data_top_sale[2][1] }}</span>&nbsp;&nbsp;&nbsp;
-      <span><i class="fa fa-square" style="color:#6BFFB8"></i> {{ $data_top_sale[3][0] }} : {{ $data_top_sale[3][1] }}</span>&nbsp;&nbsp;&nbsp;
-      <span><i class="fa fa-square" style="color:#7CFEF0"></i> {{ $data_top_sale[4][0] }} : {{ $data_top_sale[4][1] }}</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#2A6041"></i> {{ $data_top_sale[0][0] }}:{{ $data_top_sale[0][1] }}%</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#28965A"></i> {{ $data_top_sale[1][0] }}:{{ $data_top_sale[1][1] }}%</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#2CEAA3"></i> {{ $data_top_sale[2][0] }}:{{ $data_top_sale[2][1] }}%</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#6BFFB8"></i> {{ $data_top_sale[3][0] }}:{{ $data_top_sale[3][1] }}%</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#7CFEF0"></i> {{ $data_top_sale[4][0] }}:{{ $data_top_sale[4][1] }}%</span>&nbsp;&nbsp;&nbsp;
     </div>
   </div>
 </div>   
@@ -76,13 +76,14 @@
       "July",
       "August",
       "September",
+      "October",
       "November",
       "Dessember",
     ],
     datasets: [
       {
         label: "Sale",
-        fillColor: "#28965A",
+        fillColor: "#009688",
         // strokeColor: "rgba(151,187,205,1)",
         // pointColor: "rgba(151,187,205,1)",
         // pointStrokeColor: "#fff",

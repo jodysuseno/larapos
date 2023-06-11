@@ -7,10 +7,11 @@
   <title>Document</title>
 </head>
 <body>
-  <h3 align="center">{{ $title }} Report</h3>
-  <h4 align="center">LaraPos</h4>
-  <h5 align="center">Jl.Keabadain - No.1</h5>
-  <p align="right">Date : {{ $date }}</p>
+  <h3 align="center" style="margin-bottom:5px; margin-top:5px;">Stock report in {{ $date->format('F Y') }}</h3>
+  <h4 align="center" style="margin-bottom:5px; margin-top:5px;">{{ $name_shop }}</h4>
+  {{-- <h5 align="center" style="margin-bottom:5px; margin-top:5px;">Jl.Keabadain - No.1</h5> --}}
+  <h6 align="center" style="margin-bottom:5px; margin-top:5px;">Phone : {{ $phone }}</h6>
+  <p align="right" style="margin-bottom:1px; margin-top:1px;">Date : {{ $date->format('d F Y') }}</p>
   <hr>
   <table width='100%' style="border-collapse: collapse;" border="1">
     <thead>
@@ -18,7 +19,7 @@
         <th>No</th>
         <th>Barcode</th>
         <th>Date</th>
-        {{ $title == 'Stock In' ? '<th>Supplier</th>' : '' }}
+        <th>Supplier</th>
         <th>Product</th>
         <th>Status</th>
         <th>Quantity</th>
@@ -31,9 +32,9 @@
           <td align="center">{{ $loop->iteration }}</td>
           <td align="right">{{ $sale->item_barcode }}</td>
           <td align="right">{{ date_format(date_create($sale->date),"d/m/Y") }}</td>
-          {{ $title == 'Stock In' ? '<td align="left">'. $sale->supplier_name .'</td>' : '' }}
+          <td align="left">{{ $sale->supplier_name }}</td>
           <td align="left">{{ $sale->product_item }}</td>
-          <td align="left">Stock {{ $sale->type }}</td>
+          <td align="center">{{ $sale->type }}</td>
           <td align="right">{{ $sale->qty }}</td>
           <td align="left">{{ $sale->detail }}</td>
         </tr>
@@ -48,7 +49,9 @@
       <td width="33%">
       </td>
       <td width="33%">
-        Date {{ $date }}
+        <div class="text-right">
+          {{ $date->format('l') }}, {{ $date->format('d F Y') }}
+        </div>
         <br><br><br><br><br><br><hr>
       </td>
     </tr>

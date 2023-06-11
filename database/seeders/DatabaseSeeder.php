@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'admincashier',
             'password' => bcrypt('admin1234'),
             'name' => 'Admin Cashier',
-            'profile_picture' => 'default.png',
+            'profile_picture' => 'default_user.png',
             'address' => 'Jakarta Indonesia',
             'level' => 'admin',
         ]);
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'usercashier',
             'password' => bcrypt('user1234'),
             'name' => 'User Cashier',
-            'profile_picture' => 'default.png',
+            'profile_picture' => 'default_user.png',
             'address' => 'Surabaya Indonesia',
             'level' => 'cashier',
         ]);

@@ -24,30 +24,16 @@ class DashboardController extends Controller
             $sales_data_graph[] = intval(Sale::whereMonth('date', '=', Carbon::now()->month($i))->sum('total_price'));
         }
 
-        $top_sale = Cart::where('item_id', 9)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->sum('qty');
-
-
         $arr_top_sale = array();
         foreach (Item::all() as $value) {
             $arr_top_sale[] = [$value->name, intval(Cart::where('item_id', $value->item_id)->whereMonth('created_at', '=', Carbon::now()->startOfMonth())->sum('qty'))];
         }
 
-        // Mengurutkan array berdasarkan nilai kedua secara descending
         usort($arr_top_sale, function ($a, $b) {
             return $b[1] - $a[1];
         });
 
-        // Mengambil hanya 5 nilai terbesar
         $data_top_sale = array_slice($arr_top_sale, 0, 5);
-
-        // dd($data_top_sale);
-
-        // rsort($arr_top_sale_qty);
-        // $data_top_sale = array_slice($arr_top_sale_qty, 0, 5);
-        // dd($data_top_sale);
-
-
-
 
         return view(
             'dashboard',
@@ -110,10 +96,11 @@ class DashboardController extends Controller
         $update_picture = User::findOrFail(auth()->user()->id)->first();
 
         $imageName = $update_picture->name . '-' . time() . '.' . $request->profile_picture->extension();
-        $request->profile_picture->move(public_path('images'), $imageName);
+        $imagePath = public_path('images/' . $imageName);
+        // $request->profile_picture->move(public_path('images'), $imageName);
 
         $image = Image::make($request->profile_picture->getRealPath())->fit(500, 500);
-        $image->save(public_path('images'), $imageName);
+        $image->save($imagePath);
 
         $update_picture->profile_picture = $imageName;
         $update_picture->save();

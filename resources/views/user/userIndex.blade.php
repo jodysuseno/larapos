@@ -36,8 +36,8 @@
                 <tr>
                   <td class="align-middle" align="center">{{ $loop->iteration }}</td>
                   <td class="align-middle" align="center"><img src="
-                    @if ($user->profile_picture == 'default.png')
-                    {{ asset('images/default.png') }}
+                    @if ($user->profile_picture == 'default_user.png')
+                    {{ asset('images/default_user.png') }}
                     @else
                     {{ asset('images/'. $user->profile_picture) }}
                     @endif
@@ -48,12 +48,12 @@
                   <td class="align-middle" align="center">{{ $user->address }}</td>
                   <td class="align-middle" align="center">{{ $user->level }}</td>
                   <td class="align-middle" align="center">
-                    <a href="/user/{{ $user->id }}/edit" class="btn btn-info"><i class="icon fa fa-edit"></i> Update</a>
+                    <a href="/user/{{ $user->id }}/edit" class="btn btn-info btn-xs"><i class="icon fa fa-edit"></i> Update</a>
                     <form class="d-inline" action="{{ route('user.destroy',$user->id) }}" 
                       method="POST" onsubmit="return confirm('Are you sure to delete the data?')">
                       @method('delete')
                       @csrf
-                      <button class="btn btn-danger"><i class="icon fa fa-trash"></i> Delete</button>
+                      <button class="btn btn-danger btn-xs"><i class="icon fa fa-trash"></i> Delete</button>
                     </form>
                   </td>
                 </tr>

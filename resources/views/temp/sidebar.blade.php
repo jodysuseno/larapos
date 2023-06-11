@@ -3,8 +3,8 @@
 <aside class="app-sidebar">
   <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30px" height="30px"
       src="
-      @if (auth()->user()->profile_picture == 'default.png')
-      {{ asset('images/default.png') }}
+      @if (auth()->user()->profile_picture == 'default_user.png')
+      {{ asset('images/default_user.png') }}
       @else
       {{ asset('images/'. auth()->user()->profile_picture) }}
       @endif

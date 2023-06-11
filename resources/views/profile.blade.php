@@ -16,29 +16,29 @@
             </div>    
           @endif
           <div class="form-group row">
-            <div class="text-center">
-              <img src="
-              @if ($profile->profile_picture == 'default.png')
-              {{ asset('images/default.png') }}
-              @else
-              {{ asset('images/'. $profile->profile_picture) }}
-              @endif
-              " class="img-fluid rounded-circle m-3 w-75 img-thumbnail"alt="">
-            </div>
-            <label class="control-label col-md-12">Profile Picture</label>
             <div class="col-md-12">
-              <small class="text-warning"> <i class="fa fa-info"></i> Use picture have same size </small>
+              {{-- <div class="text-center"> --}}
+                <img src="
+                @if ($profile->profile_picture == 'default_user.png')
+                {{ asset('images/default_user.png') }}
+                @else
+                {{ asset('images/'. $profile->profile_picture) }}
+                @endif
+                " class="rounded-circle img-thumbnail mx-auto d-block mb-3" alt="User Profile Picture">
+              {{-- </div> --}}
+              <label class="control-label">Profile Picture</label>
               <input class="form-control @error('profile_picture') is-invalid @enderror" type="file" name="profile_picture" id="profile_picture" value="{{ old('profile_picture', $profile->profile_picture) }}" required>
               @error('profile_picture')
               <div class="invalid-feedback">{{ $message }}</div>
               @enderror
+              <small class="text-warning"> <i class="fa fa-info"></i> It is recommended to use photos of the same height and length. </small>
             </div>
           </div>
         </div>
         <div class="tile-footer">
           <div class="row">
             <div class="col-md-8 col-md-offset-3">
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+              <button class="btn btn-primary" type="submit">Change Profile</button>
             </div>
           </div>
         </div>
@@ -77,21 +77,6 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="control-label col-md-3">Password</label>
-            <div class="col-md-8">
-              <input class="form-control col-md-8" type="password" name="password" id="password" value="{{ old('password')}}">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="control-label col-md-3">Confirm Password</label>
-            <div class="col-md-8">
-              <input class="form-control @error('confirm_password') is-invalid @enderror col-md-8" type="password" name="confirm_password" id="confirm_password" value="{{ old('confirm_password')}}">
-              @error('confirm_password')
-              <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
-          <div class="form-group row">
             <label class="control-label col-md-3">Name</label>
             <div class="col-md-8">
               <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" value="{{ old('name', $profile->name) }}">
@@ -105,6 +90,24 @@
             <div class="col-md-8">
               <textarea class="form-control @error('address') is-invalid @enderror" rows="4" name="address" id="address">{{ old('address', $profile->address) }}</textarea>
               @error('address')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <hr>
+          <h4>Change Password</h4>
+          <small class="form-text text-muted mb-3" id="fileHelp">Leave the field blank if you don't change the password.</small>
+          <div class="form-group row">
+            <label class="control-label col-md-3">Password</label>
+            <div class="col-md-8">
+              <input class="form-control col-md-8" type="password" name="password" id="password" value="{{ old('password')}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="control-label col-md-3">Confirm Password</label>
+            <div class="col-md-8">
+              <input class="form-control @error('confirm_password') is-invalid @enderror col-md-8" type="password" name="confirm_password" id="confirm_password" value="{{ old('confirm_password')}}">
+              @error('confirm_password')
               <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>

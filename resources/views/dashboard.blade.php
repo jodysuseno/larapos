@@ -52,9 +52,14 @@
   <div class="col-md-4">
     <div class="tile">
       <h3 class="tile-title">Top sales in this month</h3>
-      <div class="embed-responsive embed-responsive-16by9">
+      <div class="embed-responsive embed-responsive-16by9 mb-3">
         <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
       </div>
+      <span><i class="fa fa-square" style="color:#2A6041"></i> {{ $data_top_sale[0][0] }} : {{ $data_top_sale[0][1] }}</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#28965A"></i> {{ $data_top_sale[1][0] }} : {{ $data_top_sale[1][1] }}</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#2CEAA3"></i> {{ $data_top_sale[2][0] }} : {{ $data_top_sale[2][1] }}</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#6BFFB8"></i> {{ $data_top_sale[3][0] }} : {{ $data_top_sale[3][1] }}</span>&nbsp;&nbsp;&nbsp;
+      <span><i class="fa fa-square" style="color:#7CFEF0"></i> {{ $data_top_sale[4][0] }} : {{ $data_top_sale[4][1] }}</span>&nbsp;&nbsp;&nbsp;
     </div>
   </div>
 </div>   
@@ -77,19 +82,19 @@
     datasets: [
       {
         label: "Sale",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
+        fillColor: "#28965A",
+        // strokeColor: "rgba(151,187,205,1)",
+        // pointColor: "rgba(151,187,205,1)",
+        // pointStrokeColor: "#fff",
+        // pointHighlightFill: "#fff",
+        // pointHighlightStroke: "rgba(151,187,205,1)",
         data: {{ json_encode($sale_data_graph) }}
       }
     ]
   };
   
   var ctxl = $("#LineChartDemo").get(0).getContext("2d");
-  var lineChart = new Chart(ctxl).Line(sales_data);
+  var lineChart = new Chart(ctxl).Bar(sales_data);
   
   var top_sell_data = [
     {

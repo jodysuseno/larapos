@@ -84,23 +84,6 @@ LaraPOS uses a number of open source projects to work properly:
 - [Mysql](https://www.mysql.com/) - Most popular open source database.
 - [DomPDF](https://dompdf.github.io/) - HTML to PDF converter.
 
-## Installation
-- LaraPOS installation requires [Composer](https://getcomposer.org/) to run and install [Xampp](https://www.apachefriends.org/).
-- Clone this repository.
-    ```sh
-    git clone https://github.com/jodysuseno/larapos.git
-    cd larapos
-    ```
-- Open phpmyadmin in browser type "localhost/phpmyadmin" in url and create database with name "laravel-pos"
-- Run migration and seeder to create database structure and dummy data.
-    ```sh
-    php artisan migrate --seed
-    ```
-- Run server
-    ```sh
-    php artisan serve
-    ```
-
 ## License
 
 MIT
